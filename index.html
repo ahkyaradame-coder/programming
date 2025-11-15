@@ -19,7 +19,7 @@
 	<meta property="og:url" content="https://example.com/code.html" />
 	<!-- Optional: add a full URL to an image for richer cards -->
 	<meta property="og:image" content="https://example.com/og-image.png" />
-    <link rel="icon" href="favicon.svg" type="imges/x-icon">
+	<meta name="theme-color" content="#0f1724" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content="Learn Programming — Practical, Guided Courses" />
 	<meta name="twitter:description"
@@ -34,10 +34,12 @@
 </head>
 
 <body>
-	<header class="topbar">
+	<header class="topbar" role="banner">
 		<div class="wrap topbar-inner">
 			<a class="brand" href="#hero">CodeLearn</a>
-			<nav class="nav">
+			<button id="menuToggle" class="menu-toggle" aria-label="Toggle menu" aria-expanded="false"
+				aria-controls="navMenu">☰</button>
+			<nav class="nav" id="navMenu" role="navigation">
 				<a href="#courses">Courses</a>
 				<a href="#features">Features</a>
 				<a href="#faq">FAQ</a>
@@ -56,8 +58,8 @@
 		</div>
 	</header>
 
-	<main>
-		<section id="hero" class="hero">
+	<main role="main">
+		<section id="hero" class="hero" aria-label="Hero section">
 			<div class="wrap hero-inner">
 				<div class="hero-copy">
 					<h1>Learn programming by building real projects</h1>
@@ -216,7 +218,7 @@ console.log(greet('Student'));
 			</div>
 		</section>
 	</main>
-	<footer class="footer">
+	<footer class="footer" role="contentinfo">
 		<div class="wrap">
 			<small>&copy; <span id="year"></span> CodeLearn — Learn by building. All rights reserved.</small>
 		</div>

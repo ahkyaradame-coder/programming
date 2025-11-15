@@ -75,6 +75,23 @@
 		initFAQ();
 		byId('year').textContent = new Date().getFullYear();
 
+		// Mobile menu toggle
+		const menuToggle = byId('menuToggle');
+		const navMenu = byId('navMenu');
+		if (menuToggle && navMenu) {
+			menuToggle.addEventListener('click', () => {
+				const isOpen = navMenu.classList.toggle('active');
+				menuToggle.setAttribute('aria-expanded', isOpen);
+			});
+			// Close menu when a nav link is clicked
+			navMenu.querySelectorAll('a').forEach(link => {
+				link.addEventListener('click', () => {
+					navMenu.classList.remove('active');
+					menuToggle.setAttribute('aria-expanded', 'false');
+				});
+			});
+		}
+
 		search.addEventListener('input', debounce(filterCourses, 180));
 		levelFilter.addEventListener('change', filterCourses);
 
