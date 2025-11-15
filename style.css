@@ -102,6 +102,21 @@ body {
 	outline: none
 }
 
+.btn-whatsapp {
+	background: linear-gradient(90deg, #25D366, #128C7E);
+	color: white;
+	border: none;
+	padding: 8px 12px;
+	border-radius: 8px;
+	font-weight: 700;
+	min-height: 44px;
+}
+
+.btn-whatsapp:hover {
+	transform: translateY(-1px);
+	box-shadow: 0 8px 20px rgba(18, 140, 126, 0.18);
+}
+
 .actions .btn {
 	white-space: nowrap
 }
@@ -296,6 +311,7 @@ body {
 	text-align: left;
 	border: 1px solid rgba(255, 255, 255, 0.02);
 	cursor: pointer;
+	color: #272727;
 	position: relative
 }
 
@@ -757,8 +773,209 @@ body {
 	margin-bottom: 6px
 }
 
+/* Avatar styles */
+.avatar-img {
+	width: 36px;
+	height: 36px;
+	border-radius: 999px;
+	object-fit: cover;
+	display: inline-block;
+}
+
+.avatar-fallback {
+	display: inline-block
+}
+
 @media (max-width:900px) {
 	.stars {
 		transform: scale(0.95)
+	}
+}
+
+/* RTL specific tweaks */
+[dir="rtl"] {
+	direction: rtl;
+}
+
+[dir="rtl"] .hero-copy {
+	text-align: right
+}
+
+[dir="rtl"] .nav {
+	direction: rtl
+}
+
+[dir="rtl"] .nav a {
+	text-align: right
+}
+
+[dir="rtl"] .topbar-inner {
+	direction: ltr
+}
+
+[dir="rtl"] .feedback-head {
+	direction: rtl;
+	flex-direction: column;
+	align-items: flex-end;
+}
+
+/* Discount Wheel Styles */
+.wheel-modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 2000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 300ms ease;
+}
+
+.wheel-modal[aria-hidden="false"] {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+.wheel-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.7);
+	z-index: -1;
+}
+
+.wheel-content {
+	background: var(--card);
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	border-radius: 16px;
+	padding: 40px;
+	max-width: 500px;
+	width: 90%;
+	position: relative;
+	box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.wheel-close {
+	position: absolute;
+	top: 16px;
+	right: 16px;
+	background: transparent;
+	border: none;
+	color: var(--muted);
+	font-size: 28px;
+	cursor: pointer;
+	padding: 0;
+	width: 40px;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 8px;
+	transition: background-color 200ms ease;
+}
+
+.wheel-close:hover {
+	background: var(--glass);
+}
+
+.wheel-container {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 20px 0;
+}
+
+.discount-wheel {
+	filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.4));
+}
+
+.wheel-pointer {
+	position: absolute;
+	top: -12px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 0;
+	height: 0;
+	border-left: 12px solid transparent;
+	border-right: 12px solid transparent;
+	border-top: 20px solid var(--accent);
+	z-index: 10;
+}
+
+#spinBtn {
+	font-weight: 700;
+	font-size: 16px;
+	letter-spacing: 1px;
+	transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+#spinBtn:hover {
+	transform: scale(1.05);
+	box-shadow: 0 8px 24px rgba(124, 92, 255, 0.3);
+}
+
+#spinBtn:disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
+	transform: scale(1);
+}
+
+#wheelResult {
+	animation: slideUp 300ms ease;
+}
+
+@keyframes slideUp {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes stickerFly {
+	0% {
+		opacity: 1;
+		transform: translate(0, 0) rotate(0deg) scale(1);
+	}
+
+	100% {
+		opacity: 0;
+		transform: translate(var(--tx), var(--ty)) rotate(360deg) scale(0.3);
+	}
+}
+
+.sticker {
+	position: fixed;
+	pointer-events: none;
+	z-index: 2001;
+}
+
+/* WhatsApp modal tweaks reuse wheel modal styles */
+.wheel-content input,
+.wheel-content textarea {
+	background: transparent;
+	color: var(--muted);
+	border-radius: 8px;
+}
+
+@media (max-width: 600px) {
+	.wheel-content {
+		padding: 24px;
+	}
+
+	.discount-wheel {
+		width: 250px !important;
+		height: 250px !important;
 	}
 }
