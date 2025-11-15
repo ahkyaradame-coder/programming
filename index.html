@@ -1,152 +1,243 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width,initial-scale=1" />
-		<title>Learn Programming — Practical, Guided Courses</title>
-		<meta name="description" content="Practical programming courses for beginners and experienced developers. Learn by building projects." />
-		<!-- SEO & Social tags -->
-		<meta name="robots" content="index, follow" />
-		<!-- Replace example.com with your production domain -->
-		<link rel="canonical" href="https://example.com/code.html" />
-		<meta property="og:site_name" content="CodeLearn" />
-		<meta property="og:title" content="Learn Programming — Practical, Guided Courses" />
-		<meta property="og:description" content="Practical programming courses for beginners and experienced developers. Learn by building projects." />
-		<meta property="og:type" content="website" />
-		<meta property="og:url" content="https://example.com/code.html" />
-		<!-- Optional: add a full URL to an image for richer cards -->
-		<meta property="og:image" content="https://example.com/og-image.png" />
 
-		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:title" content="Learn Programming — Practical, Guided Courses" />
-		<meta name="twitter:description" content="Practical programming courses for beginners and experienced developers. Learn by building projects." />
-		<meta name="twitter:image" content="https://example.com/og-image.png" />
-		<link rel="alternate" href="https://example.com/code.html" hreflang="en" />
-		<link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
-		<link rel="stylesheet" href="style.css" />
-	</head>
-	<body>
-		<header class="topbar">
-			<div class="wrap topbar-inner">
-				<a class="brand" href="#hero">CodeLearn</a>
-				<nav class="nav">
-					<a href="#courses">Courses</a>
-					<a href="#features">Features</a>
-					<a href="#faq">FAQ</a>
-					<a href="#contact">Contact</a>
-				</nav>
-				<div class="actions">
-					<button id="startBtn" class="btn btn-primary">Start Learning</button>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>Learn Programming — Practical, Guided Courses</title>
+	<meta name="description"
+		content="Practical programming courses for beginners and experienced developers. Learn by building projects." />
+	<!-- SEO & Social tags -->
+	<meta name="robots" content="index, follow" />
+	<!-- Replace example.com with your production domain -->
+	<link rel="canonical" href="https://example.com/code.html" />
+	<meta property="og:site_name" content="CodeLearn" />
+	<meta property="og:title" content="Learn Programming — Practical, Guided Courses" />
+	<meta property="og:description"
+		content="Practical programming courses for beginners and experienced developers. Learn by building projects." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://example.com/code.html" />
+	<!-- Optional: add a full URL to an image for richer cards -->
+	<meta property="og:image" content="https://example.com/og-image.png" />
+    <link rel="icon" href="favicon.svg" type="imges/x-icon">
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="Learn Programming — Practical, Guided Courses" />
+	<meta name="twitter:description"
+		content="Practical programming courses for beginners and experienced developers. Learn by building projects." />
+	<meta name="twitter:image" content="https://example.com/og-image.png" />
+	<link rel="alternate" href="https://example.com/code.html" hreflang="en" />
+	<link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
+	<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+	<link rel="shortcut icon" href="/favicon.svg" />
+	<link rel="apple-touch-icon" href="/favicon.svg" />
+	<link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+	<header class="topbar">
+		<div class="wrap topbar-inner">
+			<a class="brand" href="#hero">CodeLearn</a>
+			<nav class="nav">
+				<a href="#courses">Courses</a>
+				<a href="#features">Features</a>
+				<a href="#faq">FAQ</a>
+				<a href="#contact">Contact</a>
+			</nav>
+			<div class="actions">
+				<button id="darkenBtn" class="btn btn-ghost" title="Darken screen (D)">Darken</button>
+				<button id="brightenBtn" class="btn btn-ghost" title="Brighten screen (L)">Brighten</button>
+				<div id="userArea" style="display:inline-block;margin-right:8px">
+					<a id="loginLink" class="btn btn-ghost" href="login.html">Login</a>
 				</div>
+				<!-- AI Tutor toggle -->
+				<button id="aiToggle" class="btn btn-ghost" title="Open AI Tutor (T)">AI Tutor</button>
+				<button id="startBtn" class="btn btn-primary">Start Learning</button>
 			</div>
-		</header>
+		</div>
+	</header>
 
-		<main>
-			<section id="hero" class="hero">
-				<div class="wrap hero-inner">
-					<div class="hero-copy">
-						<h1>Learn programming by building real projects</h1>
-						<p class="lede">Guided courses, practical exercises, and mentor-style feedback to help you go from idea to deployable projects.</p>
-						<div class="hero-ctas">
-							<button id="heroCTA" class="btn btn-primary">Browse Courses</button>
-							<a class="btn btn-ghost" href="#features">Why CodeLearn</a>
-						</div>
+	<main>
+		<section id="hero" class="hero">
+			<div class="wrap hero-inner">
+				<div class="hero-copy">
+					<h1>Learn programming by building real projects</h1>
+					<p class="lede">Guided courses, practical exercises, and mentor-style feedback to help you go from
+						idea to deployable projects.</p>
+					<div class="hero-ctas">
+						<button id="heroCTA" class="btn btn-primary">Browse Courses</button>
+						<a class="btn btn-ghost" href="#features">Why CodeLearn</a>
 					</div>
-					<div class="hero-art" aria-hidden="true">
-						<pre class="mock-code">
+				</div>
+				<div class="hero-art" aria-hidden="true">
+					<pre class="mock-code">
 // Hello, world
 function greet(name) {
 	return `Hello, ${name}!`;
 }
 console.log(greet('Student'));
 						</pre>
-					</div>
 				</div>
-			</section>
-
-			<section id="courses" class="section">
-				<div class="wrap">
-					<div class="section-head">
-						<h2>Courses</h2>
-						<p class="muted">Pick a path and start building — each course has hands-on projects and guided solutions.</p>
-					</div>
-
-					<div class="course-controls">
-						<input id="search" type="search" placeholder="Search courses (e.g. JavaScript, Python)" aria-label="Search courses" />
-						<select id="levelFilter" aria-label="Filter by level">
-							<option value="all">All levels</option>
-							<option value="beginner">Beginner</option>
-							<option value="intermediate">Intermediate</option>
-							<option value="advanced">Advanced</option>
-						</select>
-					</div>
-
-					<div id="courseGrid" class="grid" aria-live="polite"></div>
-				</div>
-			</section>
-
-			<section id="features" class="section alt">
-				<div class="wrap features">
-					<h2>Why CodeLearn</h2>
-					<div class="feature-grid">
-						<div class="feature">
-							<h3>Project-first</h3>
-							<p>Each course centers on a real project so you practice building something useful.</p>
-						</div>
-						<div class="feature">
-							<h3>Mentor-style feedback</h3>
-							<p>Short, targeted feedback helps you iterate and improve quickly.</p>
-						</div>
-						<div class="feature">
-							<h3>Guided curriculum</h3>
-							<p>Clear learning paths that focus on practical skills employers value.</p>
-						</div>
-					</div>
-				</div>
-			</section>
-
-			<section id="faq" class="section">
-				<div class="wrap">
-					<h2>Frequently asked questions</h2>
-					<div id="faqList" class="faq">
-						<button class="faq-item">
-							<span class="q">Do I need prior experience?</span>
-							<span class="a">No — many beginner courses start with fundamentals and build up to projects.</span>
-						</button>
-						<button class="faq-item">
-							<span class="q">How are courses delivered?</span>
-							<span class="a">Lessons mix short videos, written guides, and interactive code examples.</span>
-						</button>
-						<button class="faq-item">
-							<span class="q">Can I get a certificate?</span>
-							<span class="a">Yes — complete a course project and receive a certificate of completion.</span>
-						</button>
-					</div>
-				</div>
-			</section>
-
-			<section id="contact" class="section alt small">
-				<div class="wrap">
-					<h2>Get in touch</h2>
-					<p>Questions, partnerships, or feedback — we'd love to hear from you.</p>
-					<form id="contactForm" class="contact-form" action="#" onsubmit="return false;">
-						<input type="text" id="name" placeholder="Your name" required />
-						<input type="email" id="email" placeholder="you@example.com" required />
-						<textarea id="message" placeholder="How can we help?" rows="4"></textarea>
-						<div class="form-actions">
-							<button type="submit" class="btn btn-primary">Send message</button>
-						</div>
-					</form>
-				</div>
-			</section>
-		</main>
-
-		<footer class="footer">
-			<div class="wrap">
-				<small>&copy; <span id="year"></span> CodeLearn — Learn by building. All rights reserved.</small>
 			</div>
-		</footer>
+		</section>
+		<section id="courses" class="section">
+			<div class="wrap">
+				<div class="section-head">
+					<h2>Courses</h2>
+					<p class="muted">Pick a path and start building — each course has hands-on projects and guided
+						solutions.</p>
+				</div>
+				<div class="course-controls">
+					<input id="search" type="search" placeholder="Search courses (e.g. JavaScript, Python)"
+						aria-label="Search courses" />
+					<select id="levelFilter" aria-label="Filter by level">
+						<option value="all">All levels</option>
+						<option value="beginner">Beginner</option>
+						<option value="intermediate">Intermediate</option>
+						<option value="advanced">Advanced</option>
+					</select>
+				</div>
 
-		<script src="script.js" defer></script>
-	</body>
+				<div id="courseGrid" class="grid" aria-live="polite"></div>
+			</div>
+		</section>
+		<section id="features" class="section alt">
+			<div class="wrap features">
+				<h2>Why CodeLearn</h2>
+				<div class="feature-grid">
+					<div class="feature">
+						<h3>Project-first</h3>
+						<p>Each course centers on a real project so you practice building something useful.</p>
+					</div>
+					<div class="feature">
+						<h3>Mentor-style feedback</h3>
+						<p>Short, targeted feedback helps you iterate and improve quickly.</p>
+					</div>
+					<div class="feature">
+						<h3>Guided curriculum</h3>
+						<p>Clear learning paths that focus on practical skills employers value.</p>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section id="pricing" class="section">
+			<div class="wrap">
+				<h2>Membership</h2>
+				<p class="muted">Unlock member features: progress tracking, certificates, and mentor feedback.</p>
+				<div class="pricing-grid">
+					<div class="card pricing-card">
+						<h3>Annual Membership</h3>
+						<p class="price">$100 <span class="period">/ year</span></p>
+						<ul class="benefits">
+							<li>Unlimited course access</li>
+							<li>Certificates of completion</li>
+							<li>Mentor-style feedback on projects</li>
+						</ul>
+						<div class="cta-row">
+							<button id="subscribeBtn" class="btn btn-primary">Subscribe — $100/yr</button>
+							<!-- PayPal buttons will render here when user clicks Subscribe -->
+							<div id="paypalContainer" style="margin-top:10px;display:none"></div>
+							<a class="btn btn-ghost" href="#contact">Contact sales</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section id="faq" class="section">
+			<div class="wrap">
+				<h2>Frequently asked questions</h2>
+				<div id="faqList" class="faq">
+					<button class="faq-item">
+						<span class="q">Do I need prior experience?</span>
+						<span class="a">No — many beginner courses start with fundamentals and build up to
+							projects.</span>
+					</button>
+					<button class="faq-item">
+						<span class="q">How are courses delivered?</span>
+						<span class="a">Lessons mix short videos, written guides, and interactive code examples.</span>
+					</button>
+					<button class="faq-item">
+						<span class="q">Can I get a certificate?</span>
+						<span class="a">Yes — complete a course project and receive a certificate of completion.</span>
+					</button>
+				</div>
+			</div>
+		</section>
+		<section id="contact" class="section alt small">
+			<div class="wrap">
+				<h2>Get in touch</h2>
+				<p>Questions, partnerships, or feedback — we'd love to hear from you.</p>
+				<form id="contactForm" class="contact-form" action="#" onsubmit="return false;">
+					<input type="text" id="name" placeholder="Your name" required />
+					<input type="email" id="email" placeholder="you@example.com" required />
+					<textarea id="message" placeholder="How can we help?" rows="4"></textarea>
+					<div class="form-actions">
+						<button type="submit" class="btn btn-primary">Send message</button>
+					</div>
+				</form>
+			</div>
+		</section>
+		<section id="feedback" class="section">
+			<div class="wrap">
+				<h2>How much do you like the site?</h2>
+				<p class="muted">Share a quick rating and optional comment to help us improve.</p>
+				<div class="card">
+					<div class="feedback-head"
+						style="display:flex;align-items:center;gap:12px;justify-content:space-between;">
+						<div>
+							<div id="feedbackAvg" style="font-weight:700;color:var(--accent)">No ratings yet</div>
+							<div class="muted" id="feedbackCount">Be the first to rate</div>
+						</div>
+						<div>
+							<button id="openFeedback" class="btn btn-ghost">Give feedback</button>
+						</div>
+					</div>
+					<div id="feedbackFormWrap" style="margin-top:12px;display:none">
+						<form id="feedbackForm" class="contact-form" action="#" onsubmit="return false;">
+							<div style="grid-column:1/-1">
+								<div id="feedbackStars" class="stars" aria-label="Rate this site between 1 and 5">
+									<button type="button" class="star" data-value="1" aria-label="1 star">★</button>
+									<button type="button" class="star" data-value="2" aria-label="2 stars">★</button>
+									<button type="button" class="star" data-value="3" aria-label="3 stars">★</button>
+									<button type="button" class="star" data-value="4" aria-label="4 stars">★</button>
+									<button type="button" class="star" data-value="5" aria-label="5 stars">★</button>
+								</div>
+							</div>
+							<textarea id="feedbackComment"
+								placeholder="Leave an optional comment (what you like, what to improve)"
+								rows="3"></textarea>
+							<div class="form-actions">
+								<button id="feedbackSubmit" class="btn btn-primary" type="submit">Submit
+									feedback</button>
+							</div>
+						</form>
+					</div>
+					<div id="feedbackList" style="margin-top:12px"></div>
+				</div>
+			</div>
+		</section>
+	</main>
+	<footer class="footer">
+		<div class="wrap">
+			<small>&copy; <span id="year"></span> CodeLearn — Learn by building. All rights reserved.</small>
+		</div>
+	</footer>
+	<script src="script.js" defer></script>
+
+	<!-- AI Tutor chat modal -->
+	<div id="aiTutor" class="ai-tutor" aria-hidden="true">
+		<div class="ai-header">
+			<strong>AI Tutor</strong>
+			<button id="aiClose" aria-label="Close chat">×</button>
+		</div>
+		<div id="aiMessages" class="ai-messages" role="log" aria-live="polite"></div>
+		<form id="aiForm" class="ai-form" onsubmit="return false;">
+			<input id="aiInput" type="text" placeholder="Ask me to explain arrays, write code, or create an exercise..."
+				aria-label="Ask the AI tutor" />
+			<button id="aiSend" class="btn btn-primary" type="submit">Send</button>
+		</form>
+	</div>
+
+</body>
+</body>
+
 </html>
