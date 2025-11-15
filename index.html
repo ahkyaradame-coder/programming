@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+		<title>Learn Programming — Practical, Guided Courses</title>
+		<meta name="description" content="Practical programming courses for beginners and experienced developers. Learn by building projects." />
+		<!-- SEO & Social tags -->
+		<meta name="robots" content="index, follow" />
+		<!-- Replace example.com with your production domain -->
+		<link rel="canonical" href="https://example.com/code.html" />
+		<meta property="og:site_name" content="CodeLearn" />
+		<meta property="og:title" content="Learn Programming — Practical, Guided Courses" />
+		<meta property="og:description" content="Practical programming courses for beginners and experienced developers. Learn by building projects." />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://example.com/code.html" />
+		<!-- Optional: add a full URL to an image for richer cards -->
+		<meta property="og:image" content="https://example.com/og-image.png" />
+
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content="Learn Programming — Practical, Guided Courses" />
+		<meta name="twitter:description" content="Practical programming courses for beginners and experienced developers. Learn by building projects." />
+		<meta name="twitter:image" content="https://example.com/og-image.png" />
+		<link rel="alternate" href="https://example.com/code.html" hreflang="en" />
+		<link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<header class="topbar">
+			<div class="wrap topbar-inner">
+				<a class="brand" href="#hero">CodeLearn</a>
+				<nav class="nav">
+					<a href="#courses">Courses</a>
+					<a href="#features">Features</a>
+					<a href="#faq">FAQ</a>
+					<a href="#contact">Contact</a>
+				</nav>
+				<div class="actions">
+					<button id="startBtn" class="btn btn-primary">Start Learning</button>
+				</div>
+			</div>
+		</header>
+
+		<main>
+			<section id="hero" class="hero">
+				<div class="wrap hero-inner">
+					<div class="hero-copy">
+						<h1>Learn programming by building real projects</h1>
+						<p class="lede">Guided courses, practical exercises, and mentor-style feedback to help you go from idea to deployable projects.</p>
+						<div class="hero-ctas">
+							<button id="heroCTA" class="btn btn-primary">Browse Courses</button>
+							<a class="btn btn-ghost" href="#features">Why CodeLearn</a>
+						</div>
+					</div>
+					<div class="hero-art" aria-hidden="true">
+						<pre class="mock-code">
+// Hello, world
+function greet(name) {
+	return `Hello, ${name}!`;
+}
+console.log(greet('Student'));
+						</pre>
+					</div>
+				</div>
+			</section>
+
+			<section id="courses" class="section">
+				<div class="wrap">
+					<div class="section-head">
+						<h2>Courses</h2>
+						<p class="muted">Pick a path and start building — each course has hands-on projects and guided solutions.</p>
+					</div>
+
+					<div class="course-controls">
+						<input id="search" type="search" placeholder="Search courses (e.g. JavaScript, Python)" aria-label="Search courses" />
+						<select id="levelFilter" aria-label="Filter by level">
+							<option value="all">All levels</option>
+							<option value="beginner">Beginner</option>
+							<option value="intermediate">Intermediate</option>
+							<option value="advanced">Advanced</option>
+						</select>
+					</div>
+
+					<div id="courseGrid" class="grid" aria-live="polite"></div>
+				</div>
+			</section>
+
+			<section id="features" class="section alt">
+				<div class="wrap features">
+					<h2>Why CodeLearn</h2>
+					<div class="feature-grid">
+						<div class="feature">
+							<h3>Project-first</h3>
+							<p>Each course centers on a real project so you practice building something useful.</p>
+						</div>
+						<div class="feature">
+							<h3>Mentor-style feedback</h3>
+							<p>Short, targeted feedback helps you iterate and improve quickly.</p>
+						</div>
+						<div class="feature">
+							<h3>Guided curriculum</h3>
+							<p>Clear learning paths that focus on practical skills employers value.</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section id="faq" class="section">
+				<div class="wrap">
+					<h2>Frequently asked questions</h2>
+					<div id="faqList" class="faq">
+						<button class="faq-item">
+							<span class="q">Do I need prior experience?</span>
+							<span class="a">No — many beginner courses start with fundamentals and build up to projects.</span>
+						</button>
+						<button class="faq-item">
+							<span class="q">How are courses delivered?</span>
+							<span class="a">Lessons mix short videos, written guides, and interactive code examples.</span>
+						</button>
+						<button class="faq-item">
+							<span class="q">Can I get a certificate?</span>
+							<span class="a">Yes — complete a course project and receive a certificate of completion.</span>
+						</button>
+					</div>
+				</div>
+			</section>
+
+			<section id="contact" class="section alt small">
+				<div class="wrap">
+					<h2>Get in touch</h2>
+					<p>Questions, partnerships, or feedback — we'd love to hear from you.</p>
+					<form id="contactForm" class="contact-form" action="#" onsubmit="return false;">
+						<input type="text" id="name" placeholder="Your name" required />
+						<input type="email" id="email" placeholder="you@example.com" required />
+						<textarea id="message" placeholder="How can we help?" rows="4"></textarea>
+						<div class="form-actions">
+							<button type="submit" class="btn btn-primary">Send message</button>
+						</div>
+					</form>
+				</div>
+			</section>
+		</main>
+
+		<footer class="footer">
+			<div class="wrap">
+				<small>&copy; <span id="year"></span> CodeLearn — Learn by building. All rights reserved.</small>
+			</div>
+		</footer>
+
+		<script src="script.js" defer></script>
+	</body>
+</html>
