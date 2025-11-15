@@ -39,11 +39,17 @@
 			heroCTA: 'Browse Courses',
 			startBtn: 'Start Learning',
 			subscribeBtn: 'Subscribe — $100/yr',
-			darken: 'Darken', brighten: 'Brighten', aiToggle: 'AI Tutor',
+			darken: 'Darken', brighten: 'Brighten', aiToggle: 'AI Tutor', aiInputPlaceholder: 'Ask me to explain arrays, write code, or create an exercise...',
 			openFeedback: 'Give feedback', feedbackSubmit: 'Submit feedback',
 			contactSend: 'Send message',
 			searchPlaceholder: 'Search courses (e.g. JavaScript, Python)',
-			levelAllText: 'All levels'
+			levelAllText: 'All levels',
+			// Game strings
+			gameIntroText: 'Ready? This short quiz has 7 multiple-choice questions.',
+			gameStartBtn: 'Play Now',
+			gameQuestionOf: 'Question {i} of {n}',
+			gameEstimatedLevel: 'Estimated level: ',
+			gameRecommendedCourses: 'Recommended courses: '
 		},
 		ar: {
 			lang: 'ar', dir: 'rtl',
@@ -53,11 +59,17 @@
 			heroCTA: 'استعرض الدورات',
 			startBtn: 'ابدأ التعلم',
 			subscribeBtn: 'اشترك — 100$/سنة',
-			darken: 'تعتيم', brighten: 'تفتيح', aiToggle: 'المعلم الذكي',
+			darken: 'تعتيم', brighten: 'تفتيح', aiToggle: 'المعلم الذكي', aiInputPlaceholder: 'اطلب مني شرح المصفوفات، كتابة كود، أو إنشاء تمرين...',
 			openFeedback: 'قدّم ملاحظات', feedbackSubmit: 'إرسال',
 			contactSend: 'إرسال الرسالة',
 			searchPlaceholder: 'ابحث عن الدورات (مثل JavaScript, Python)',
-			levelAllText: 'كل المستويات'
+			levelAllText: 'كل المستويات',
+			// Game strings (Arabic)
+			gameIntroText: 'جاهز؟ هذا الاختبار القصير يحتوي على 7 أسئلة متعددة الخيارات.',
+			gameStartBtn: 'ابدأ اللعب',
+			gameQuestionOf: 'السؤال {i} من {n}',
+			gameEstimatedLevel: 'المستوى المقدر: ',
+			gameRecommendedCourses: 'الدورات الموصى بها: '
 		}
 	};
 
@@ -96,6 +108,16 @@
 		// Search placeholder and level filter first option
 		const s = byId('search'); if (s) s.placeholder = map.searchPlaceholder;
 		const level = byId('levelFilter'); if (level && level.options && level.options.length) level.options[0].text = map.levelAllText;
+
+		// AI input placeholder (if present)
+		const aiInputEl = byId('aiInput');
+		if (aiInputEl && map.aiInputPlaceholder) aiInputEl.placeholder = map.aiInputPlaceholder;
+
+		// Game UI strings
+		const gameStartBtn = byId('gameStart');
+		if (gameStartBtn && map.gameStartBtn) gameStartBtn.textContent = map.gameStartBtn;
+		const gameIntroP = document.querySelector('#gameIntro p');
+		if (gameIntroP && map.gameIntroText) gameIntroP.textContent = map.gameIntroText;
 	}
 
 	function setLanguage(lang) {
@@ -679,6 +701,82 @@
 	function cannedAiResponse(q) {
 		const s = String(q).toLowerCase();
 
+		// If the site language is Arabic, provide Arabic responses.
+		const siteLang = (typeof document !== 'undefined' && document.documentElement && document.documentElement.lang) ? document.documentElement.lang : 'en';
+		if (siteLang === 'ar') {
+			const sa = s;
+
+			// Exercise & Practice Requests
+			if (sa.includes('exercise') || sa.includes('practice') || sa.includes('project') || sa.includes('تمرين') || sa.includes('ممارسة') || sa.includes('مشروع')) {
+				const ex = [
+					'بنِ مشروع قائمة مهام: أنشأ واجهة لإضافة وحذف وتصفية المهام، خزنها في مصفوفة وادعم التخزين في localStorage.',
+					'أنشئ مدقق كلمات المرور: دالة تتحقق من الطول (8+)، وحروف كبيرة/صغيرة، وأرقام، ورموز خاصة، وتعيد ملاحظات مفصلة.',
+					'بِناء آلة حاسبة بسيطة: دعم العمليات +, -, *, / مع معالجة خطأ القسمة على صفر، وأضف اختصارات لوحة المفاتيح.',
+					'نسخة بسيطة من بحث مستخدمين على GitHub: استعلم عن واجهة برمجة التطبيقات وعرض المستودعات والمتابعين في بطاقات.'
+				];
+				return ex[Math.floor(Math.random() * ex.length)];
+			}
+
+			// Concept Explanations
+			if (sa.includes('explain') || sa.includes('شرح') || sa.includes('اشرح')) {
+				if (sa.includes('array') || sa.includes('مصفوف') || sa.includes('قائمة') || sa.includes('list')) {
+					return 'المصفوفات تخزن عدة قيم في متغير واحد. مثال: [1,2,3]. الوصول للعناصر يتم عبر الفهرس بدءًا من 0: arr[0]. من الدوال المهمة: push() لإضافة، pop() للحذف، map() للتحويل، filter() للاختيار، reduce() للتجميع.';
+				}
+				if (sa.includes('function') || sa.includes('دالة') || sa.includes('تابع')) {
+					return 'الدوال هي كتل قابلة لإعادة الاستخدام من الكود. تعريف: function foo(x) { } أو بالأسهم: const foo = x => { }. تستعيد القيم عبر return. استخدم الدوال لتقليل التكرار وفصل المسؤوليات.';
+				}
+				if (sa.includes('promise') || sa.includes('async') || sa.includes('وعد') || sa.includes('غير متزامن')) {
+					return 'الوعود (Promises) تتعامل مع العمليات غير المتزامنة مثل طلبات الشبكة. حالاتها: pending → fulfilled → rejected. استخدم then/catch أو async/await لكتابة أوضح.';
+				}
+				if (sa.includes('loop') || sa.includes('حلقة') || sa.includes('تكرار')) {
+					return 'الحلقات تكرر تنفيذ الكود. for للتكرار بعدد محدد، for...of للقيم، while للحلقت الشرطية. في JS تفضّل map/filter/reduce للتعامل مع المصفوفات.';
+				}
+			}
+
+			// Debugging & Problem Solving
+			if (sa.includes('debug') || sa.includes('خطأ') || sa.includes('error') || sa.includes('fix') || sa.includes('اصلاح')) {
+				return 'نصائح التصحيح: اقرأ رسالة الخطأ بعناية، استخدم console.log() لتعقب القيم، استخدم أدوات المطور (DevTools) لتتبع التنفيذ، وانشئ مثالًا مصغرًا يعيد المشكلة.';
+			}
+
+			// Code Writing Requests
+			if (sa.includes('write') || sa.includes('code') || sa.includes('اكتب') || sa.includes('كود')) {
+				if (sa.includes('function') || sa.includes('دالة')) {
+					return 'مثال: function double(n) { return n * 2; } أو const double = n => n * 2; اختبر الحالات الحافة مثل null و0 والقيم السالبة.';
+				}
+				if (sa.includes('loop') && sa.includes('array')) {
+					return 'استخدم map للعمليات على المصفوفات: const result = arr.map(x => x * 2); بدلاً من حلقات for التقليدية عند الإمكان.';
+				}
+			}
+
+			// Best Practices
+			if (sa.includes('best practice') || sa.includes('ممارسة جيدة') || sa.includes('convention') || sa.includes('نمط')) {
+				return 'ممارسات نظيفة: سمّ المتغيرات بوضوح، اجعل الدوال صغيرة ومركزة، اكتب اختبارات للحالات الحافة، واستخدم أدوات تنسيق للكود مثل Prettier.';
+			}
+
+			// Performance & Optimization
+			if (sa.includes('perform') || sa.includes('optim') || sa.includes('سريع') || sa.includes('أداء')) {
+				return 'نصائح الأداء: تجنّب الحلقات المتداخلة المكلفة، خزن نتائج استدعاءات DOM، استخدم debounce للأحداث المتكررة، وفكّر في هيكلة البيانات المناسبة (Set مقابل Array).';
+			}
+
+			// Learning Path
+			if (sa.includes('learn') || sa.includes('path') || sa.includes('beginner') || sa.includes('تعلم') || sa.includes('مبتدئ')) {
+				return 'مسار التعلم: الأساسيات (متغيرات، حلقات، دوال) → DOM و الأحداث → الشبكات والـ async → إطار عمل (مثل React) → قواعد البيانات والـ backend. انشئ مشاريع صغيرة بعد كل خطوة.';
+			}
+
+			// Testing
+			if (sa.includes('test') || sa.includes('اختبار')) {
+				return 'الاختبار: ابدأ بالاختبارات الوحدوية (unit tests) باستخدام Jest أو Mocha. اختبر المسارات السعيدة والحالات الحافة. اربط الاختبارات بـ CI لتشغيلها على كل دفع (push).';
+			}
+
+			// Friendly Greetings
+			if (sa.includes('hello') || sa.includes('hi') || sa.includes('hey') || sa.includes('thanks') || sa.includes('مرحب')) {
+				return 'أهلاً! أنا مرشدك الذكي. اسألني عن مفاهيم برمجية، اطلب تمرينًا عمليًا، أو شاركني رمزًا لأساعدك في تصحيحه. بماذا أساعدك اليوم؟';
+			}
+
+			// Default Arabic fallback
+			return 'أنا المرشد الذكي. أستطيع شرح المفاهيم، اقتراح تمارين، مساعدة في تصحيح الأخطاء، ومشاركة أفضل الممارسات. ماذا تريد أن تتعلم اليوم؟';
+		}
+
 		// Exercise & Practice Requests
 		if (s.includes('exercise') || s.includes('practice') || s.includes('project')) {
 			const exercises = [
@@ -772,6 +870,238 @@
 		if (aiForm) { aiForm.addEventListener('submit', (ev) => { ev.preventDefault(); const q = aiInput.value.trim(); if (!q) return; aiInput.value = ''; aiAsk(q); }); }
 		// keyboard to open tutor (T)
 		document.addEventListener('keydown', (ev) => { if (ev.key === 't' || ev.key === 'T') { if (document.activeElement && ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return; ev.preventDefault(); aiToggle && aiToggle.click(); } });
+	})();
+
+	/* --- Quick Quiz Game: determine programming level --- */
+	(function wireGameUi() {
+		const playBtn = document.getElementById('playNowBtn');
+		const gameModal = document.getElementById('gameModal');
+		const gameClose = document.getElementById('gameClose');
+		const gameStart = document.getElementById('gameStart');
+		const gameIntro = document.getElementById('gameIntro');
+		const gameQuestionWrap = document.getElementById('gameQuestionWrap');
+		const gameQuestionEl = document.getElementById('gameQuestion');
+		const gameOptions = document.getElementById('gameOptions');
+		const gameProgress = document.getElementById('gameProgress');
+		const gameNext = document.getElementById('gameNext');
+		const gameRestart = document.getElementById('gameRestart');
+		const gameResultWrap = document.getElementById('gameResultWrap');
+		const gameResult = document.getElementById('gameResult');
+		const gameRec = document.getElementById('gameRec');
+		const viewCoursesFromGame = document.getElementById('viewCoursesFromGame');
+
+		if (!gameModal) return;
+
+		const questions = [
+			{
+				q: { en: 'Which of these best describes a variable in programming?', ar: 'أي مما يلي يصف المتغير في البرمجة؟' },
+				opts: [
+					{ en: 'A named storage for data', ar: 'مكان مسمى لتخزين البيانات', score: 1 },
+					{ en: 'A UI component', ar: 'مكوّن واجهة مستخدم', score: 0 },
+					{ en: 'A network protocol', ar: 'بروتوكول شبكي', score: 0 }
+				]
+			},
+			{
+				q: { en: 'Which method creates a new array by transforming each element?', ar: 'أي دالة تُنشئ مصفوفة جديدة بتحويل كل عنصر؟' },
+				opts: [
+					{ en: 'filter()', ar: 'filter()', score: 0 },
+					{ en: 'map()', ar: 'map()', score: 3 },
+					{ en: 'forEach()', ar: 'forEach()', score: 1 }
+				]
+			},
+			{
+				q: { en: 'What does CSS control?', ar: 'ماذا يتحكم CSS؟' },
+				opts: [
+					{ en: 'Structure & semantics', ar: 'الهيكل والدلالة', score: 0 },
+					{ en: 'Styling & layout', ar: 'التصميم والتخطيط', score: 1 },
+					{ en: 'Backend APIs', ar: 'واجهات برمجة خلفية', score: 0 }
+				]
+			},
+			{
+				q: { en: 'What is an API?', ar: 'ما هي واجهة برمجة التطبيقات (API)؟' },
+				opts: [
+					{ en: 'A design pattern', ar: 'نمط تصميم', score: 0 },
+					{ en: 'A way for software to communicate', ar: 'طريقة لتواصل البرمجيات', score: 3 },
+					{ en: 'A CSS library', ar: 'مكتبة CSS', score: 0 }
+				]
+			},
+			{
+				q: { en: 'Which concept is related to asynchronous JavaScript?', ar: 'أي مفهوم مرتبط بجافاسكربت غير المتزامنة؟' },
+				opts: [
+					{ en: 'Promises / async-await', ar: 'Promises / async-await', score: 3 },
+					{ en: 'CSS Grid', ar: 'CSS Grid', score: 0 },
+					{ en: 'SQL Joins', ar: 'انضمامات SQL', score: 0 }
+				]
+			},
+			{
+				q: { en: 'Which statement about functions is true?', ar: 'أي عبارة عن الدوال صحيحة؟' },
+				opts: [
+					{ en: 'They can return values', ar: 'يمكنها إعادة قيم', score: 2 },
+					{ en: 'They always run automatically', ar: 'تعمل دائمًا تلقائيًا', score: 0 },
+					{ en: 'They are only in CSS', ar: 'توجد فقط في CSS', score: 0 }
+				]
+			},
+			{
+				q: { en: 'What does "debugging" usually require?', ar: 'ماذا يتطلب عادةً "تصحيح الأخطاء"؟' },
+				opts: [
+					{ en: 'Reading error messages and inspecting state', ar: 'قراءة رسائل الخطأ وفحص الحالة', score: 3 },
+					{ en: 'Adding more images', ar: 'إضافة صور أكثر', score: 0 },
+					{ en: 'Changing fonts', ar: 'تغيير الخطوط', score: 0 }
+				]
+			}
+		];
+
+		let state = { idx: 0, answers: [] };
+
+		function openGame() {
+			gameModal.setAttribute('aria-hidden', 'false');
+			gameModal.style.display = 'flex';
+			gameIntro.style.display = 'block';
+			gameQuestionWrap.style.display = 'none';
+			gameResultWrap.style.display = 'none';
+		}
+
+		function closeGame() {
+			gameModal.setAttribute('aria-hidden', 'true');
+			gameModal.style.display = 'none';
+		}
+
+		function startGame() {
+			state.idx = 0; state.answers = [];
+			gameIntro.style.display = 'none';
+			gameQuestionWrap.style.display = 'block';
+			gameResultWrap.style.display = 'none';
+			renderQuestion();
+		}
+
+		function renderQuestion() {
+			const it = questions[state.idx];
+			const lang = (document.documentElement && document.documentElement.lang) ? document.documentElement.lang : 'en';
+			const map = TRANSLATIONS[lang] || TRANSLATIONS.en;
+			gameProgress.textContent = (map.gameQuestionOf || 'Question {i} of {n}').replace('{i}', String(state.idx + 1)).replace('{n}', String(questions.length));
+			gameQuestionEl.textContent = (it.q && (it.q[lang] || it.q.en)) || '';
+			gameOptions.innerHTML = '';
+			it.opts.forEach((o, i) => {
+				const btn = document.createElement('button');
+				btn.className = 'btn btn-ghost game-opt';
+				btn.textContent = (o[lang] || o.en) || '';
+				btn.dataset.score = String(o.score || 0);
+				btn.addEventListener('click', () => selectOption(btn));
+				gameOptions.appendChild(btn);
+			});
+			gameNext.style.display = 'none';
+			gameRestart.style.display = 'none';
+		}
+
+		function selectOption(btn) {
+			// mark selection
+			Array.from(gameOptions.children).forEach(c => c.classList.remove('active'));
+			btn.classList.add('active');
+			gameNext.style.display = 'inline-block';
+		}
+
+		function nextQuestion() {
+			const sel = gameOptions.querySelector('.active');
+			if (!sel) return alert('Please choose an option.');
+			state.answers.push(Number(sel.dataset.score || 0));
+			state.idx += 1;
+			if (state.idx >= questions.length) {
+				finishGame();
+			} else {
+				renderQuestion();
+			}
+		}
+
+		function finishGame() {
+			// compute average score
+			const sum = state.answers.reduce((s, v) => s + v, 0);
+			const avg = sum / state.answers.length;
+			let level = 'Beginner';
+			if (avg >= 2.5) level = 'Advanced';
+			else if (avg >= 1.5) level = 'Intermediate';
+			const lang = (document.documentElement && document.documentElement.lang) ? document.documentElement.lang : 'en';
+			const map = TRANSLATIONS[lang] || TRANSLATIONS.en;
+			gameResult.textContent = `${(map.gameEstimatedLevel || 'Estimated level: ')}${level}`;
+			// suggest courses
+			const rec = courses.filter(c => {
+				if (level === 'Beginner') return c.level === 'beginner';
+				if (level === 'Intermediate') return c.level === 'intermediate';
+				return c.level === 'advanced';
+			}).slice(0, 3).map(c => c.title).join(', ');
+			gameRec.textContent = rec ? `${(map.gameRecommendedCourses || 'Recommended courses: ')}${rec}` : (lang === 'ar' ? 'استعرض دوراتنا للعثور على المناسب.' : 'Explore our courses to find a good fit.');
+			gameQuestionWrap.style.display = 'none';
+			gameResultWrap.style.display = 'block';
+			gameRestart.style.display = 'inline-block';
+			// persist result to localStorage
+			try { localStorage.setItem('lastQuizResult', JSON.stringify({ level, avg, date: new Date().toISOString() })); } catch (e) { /* ignore */ }
+
+			// Show level assessment overlay with progress animation
+			try { showLevelOverlay(level); } catch (e) { /* ignore */ }
+		}
+
+		function showLevelOverlay(level) {
+			const overlay = document.getElementById('levelOverlay');
+			const fill = document.getElementById('levelBarFill');
+			const msg = document.getElementById('levelMessage');
+			const pct = document.getElementById('levelPercent');
+			if (!overlay || !fill) return;
+
+			overlay.setAttribute('aria-hidden', 'false');
+			overlay.style.display = 'flex';
+
+			// Map levels to progress percentage
+			let target = 0;
+			let label = level || '';
+			switch ((level || '').toLowerCase()) {
+				case 'advanced':
+				case 'professional':
+					target = 100; break;
+				case 'intermediate':
+					target = 60; break;
+				default:
+					target = 0; break; // Beginner: no movement
+			}
+
+			// Friendly message
+			if (msg) msg.textContent = (document.documentElement.lang === 'ar') ? 'جاري تقييم مستواك...' : 'Assessing your level...';
+
+			// animate
+			setTimeout(() => {
+				fill.style.width = target + '%';
+				if (pct) pct.textContent = target + '%';
+			}, 80);
+
+			// hide overlay after animation completes (3.5s)
+			setTimeout(() => {
+				overlay.setAttribute('aria-hidden', 'true');
+				overlay.style.display = 'none';
+				// reset fill for next time
+				fill.style.width = '0%';
+				if (pct) pct.textContent = '0%';
+			}, 3800);
+
+			// allow click to dismiss immediately
+			overlay.addEventListener('click', (ev) => {
+				if (ev.target === overlay) {
+					overlay.setAttribute('aria-hidden', 'true');
+					overlay.style.display = 'none';
+					fill.style.width = '0%';
+					if (pct) pct.textContent = '0%';
+				}
+			});
+		}
+
+		// wiring
+		if (playBtn) playBtn.addEventListener('click', openGame);
+		if (gameClose) gameClose.addEventListener('click', closeGame);
+		if (gameStart) gameStart.addEventListener('click', startGame);
+		if (gameNext) gameNext.addEventListener('click', nextQuestion);
+		if (gameRestart) gameRestart.addEventListener('click', startGame);
+		if (viewCoursesFromGame) viewCoursesFromGame.addEventListener('click', () => { closeGame(); document.querySelector('#courses') && document.querySelector('#courses').scrollIntoView({ behavior: 'smooth' }); });
+
+		// close modal on overlay click
+		gameModal.addEventListener('click', (ev) => { if (ev.target === gameModal) closeGame(); });
+
 	})();
 
 	/* --- Discount Wheel --- */
@@ -943,7 +1273,7 @@
 
 		function createConfetti() {
 			const wheelContent = byId('wheelModal');
-			const stickers = ['🎉', '⭐', '🎊', '💰', '✨', '🏆', '🎁', '🚀'];
+			const stickers = ['🎉', '⭐', '🎊', '💰', '✨', '🏆', '🎁', '🚀', '🥰', '😎', '🎉'];
 
 			for (let i = 0; i < 20; i++) {
 				const sticker = document.createElement('div');

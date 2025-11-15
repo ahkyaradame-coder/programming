@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
 	<meta name="google-site-verification" content="LViI0TN4SmE_onOG3U5nKHVx_v3JHWV41vcULaQ_iZE" />
 	<meta charset="utf-8" />
@@ -38,9 +39,9 @@
 	<meta name="twitter:image" content="https://example.com/og-image.png" />
 	<link rel="alternate" href="https://example.com/code.html" hreflang="en" />
 	<link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
-	<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-	<link rel="shortcut icon" href="/favicon.svg" />
-	<link rel="apple-touch-icon" href="/favicon.svg" />
+	<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+	<link rel="shortcut icon" href="favicon.svg" />
+	<link rel="apple-touch-icon" href="favicon.svg" />
 	<link rel="stylesheet" href="style.css" />
 </head>
 
@@ -68,6 +69,9 @@
 				</div>
 				<!-- AI Tutor toggle -->
 				<button id="aiToggle" class="btn btn-ghost" title="Open AI Tutor (T)">AI Tutor</button>
+				<!-- Quick quiz game to determine your programming level -->
+				<button id="playNowBtn" class="btn btn-ghost" title="Play Now — determine your programming level">Play
+					Now</button>
 				<!-- WhatsApp expert chat -->
 				<button id="whatsappBtn" class="btn btn-whatsapp"
 					title="Chat with an expert via WhatsApp">WhatsApp</button>
@@ -259,6 +263,35 @@ console.log(greet('Student'));
 		</form>
 	</div>
 
+	<!-- Quick Quiz Game Modal -->
+	<div id="gameModal" class="game-modal" aria-hidden="true">
+		<div class="game-overlay"></div>
+		<div class="game-content">
+			<button id="gameClose" class="game-close" aria-label="Close game">×</button>
+			<h2>Programming Level Quiz</h2>
+			<p class="muted">Answer a few quick questions to estimate your programming level.</p>
+			<div id="gameBody">
+				<div id="gameIntro">
+					<p>Ready? This short quiz has 7 multiple-choice questions.</p>
+					<button id="gameStart" class="btn btn-primary">Play Now</button>
+				</div>
+				<div id="gameQuestionWrap" style="display:none">
+					<div id="gameProgress" style="margin-bottom:8px;color:var(--muted)"></div>
+					<div id="gameQuestion" class="game-question" style="margin-bottom:12px;font-weight:700"></div>
+					<div id="gameOptions" class="game-options"></div>
+					<div style="margin-top:12px"><button id="gameNext" class="btn btn-primary"
+							style="display:none">Next</button> <button id="gameRestart" class="btn btn-ghost"
+							style="display:none">Restart</button></div>
+				</div>
+				<div id="gameResultWrap" style="display:none">
+					<div id="gameResult" style="font-size:18px;font-weight:700;margin-bottom:8px"></div>
+					<div id="gameRec" class="muted" style="margin-bottom:12px"></div>
+					<button id="viewCoursesFromGame" class="btn btn-primary">View Recommended Courses</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<!-- Discount Wheel Modal -->
 	<div id="wheelModal" class="wheel-modal" aria-hidden="true">
 		<div class="wheel-overlay"></div>
@@ -307,7 +340,17 @@ console.log(greet('Student'));
 		</div>
 	</div>
 
-</body>
+	<!-- Level assessment overlay (appears after quiz) -->
+	<div id="levelOverlay" class="level-overlay" aria-hidden="true">
+		<div class="level-overlay-inner">
+			<div id="levelMessage" class="level-message">Assessing your level...</div>
+			<div class="level-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+				<div id="levelBarFill" class="level-bar-fill" style="width:0%"></div>
+			</div>
+			<div id="levelPercent" class="level-percent">0%</div>
+		</div>
+	</div>
+
 </body>
 
 </html>
