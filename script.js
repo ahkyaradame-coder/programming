@@ -896,7 +896,7 @@
 			{
 				q: { en: 'Which of these best describes a variable in programming?', ar: 'أي مما يلي يصف المتغير في البرمجة؟' },
 				opts: [
-					{ en: 'A named storage for data', ar: 'مكان مسمى لتخزين البيانات', score: 1 },
+					{ en: 'A named storage for data', ar: 'مكان مسمى لتخزين البيانات', score: 3 },
 					{ en: 'A UI component', ar: 'مكوّن واجهة مستخدم', score: 0 },
 					{ en: 'A network protocol', ar: 'بروتوكول شبكي', score: 0 }
 				]
@@ -906,14 +906,14 @@
 				opts: [
 					{ en: 'filter()', ar: 'filter()', score: 0 },
 					{ en: 'map()', ar: 'map()', score: 3 },
-					{ en: 'forEach()', ar: 'forEach()', score: 1 }
+					{ en: 'forEach()', ar: 'forEach()', score: 0 }
 				]
 			},
 			{
 				q: { en: 'What does CSS control?', ar: 'ماذا يتحكم CSS؟' },
 				opts: [
 					{ en: 'Structure & semantics', ar: 'الهيكل والدلالة', score: 0 },
-					{ en: 'Styling & layout', ar: 'التصميم والتخطيط', score: 1 },
+					{ en: 'Styling & layout', ar: 'التصميم والتخطيط', score: 3 },
 					{ en: 'Backend APIs', ar: 'واجهات برمجة خلفية', score: 0 }
 				]
 			},
@@ -936,7 +936,7 @@
 			{
 				q: { en: 'Which statement about functions is true?', ar: 'أي عبارة عن الدوال صحيحة؟' },
 				opts: [
-					{ en: 'They can return values', ar: 'يمكنها إعادة قيم', score: 2 },
+					{ en: 'They can return values', ar: 'يمكنها إعادة قيم', score: 3 },
 					{ en: 'They always run automatically', ar: 'تعمل دائمًا تلقائيًا', score: 0 },
 					{ en: 'They are only in CSS', ar: 'توجد فقط في CSS', score: 0 }
 				]
@@ -1000,9 +1000,22 @@
 			gameNext.style.display = 'inline-block';
 		}
 
+		function isAnswerCorrect(btn) {
+			const score = Number(btn.dataset.score || 0);
+			return score > 0;
+		}
+
 		function nextQuestion() {
 			const sel = gameOptions.querySelector('.active');
 			if (!sel) return alert('Please choose an option.');
+
+			// Check if answer is correct and mark incorrect answers in red
+			const correct = isAnswerCorrect(sel);
+			if (!correct) {
+				// Mark incorrect answer in red
+				sel.classList.add('incorrect');
+			}
+
 			state.answers.push(Number(sel.dataset.score || 0));
 			state.idx += 1;
 			if (state.idx >= questions.length) {
@@ -1029,6 +1042,55 @@
 				return c.level === 'advanced';
 			}).slice(0, 3).map(c => c.title).join(', ');
 			gameRec.textContent = rec ? `${(map.gameRecommendedCourses || 'Recommended courses: ')}${rec}` : (lang === 'ar' ? 'استعرض دوراتنا للعثور على المناسب.' : 'Explore our courses to find a good fit.');
+
+			// Build answer summary at the bottom of the page
+			const pageAnswerSummary = document.getElementById('pageAnswerSummary');
+			const quizSummarySection = document.getElementById('quizSummarySection');
+			if (pageAnswerSummary && quizSummarySection) {
+				pageAnswerSummary.innerHTML = '';
+
+				const summaryList = document.createElement('div');
+				summaryList.style.display = 'flex';
+				summaryList.style.flexDirection = 'column';
+				summaryList.style.gap = '12px';
+
+				state.answers.forEach((score, idx) => {
+					const question = questions[idx];
+					const qText = (question.q && (question.q[lang] || question.q.en)) || '';
+					const isCorrect = score > 0;
+
+					const item = document.createElement('div');
+					item.style.padding = '12px 16px';
+					item.style.borderRadius = '8px';
+					item.style.borderLeft = `4px solid ${isCorrect ? '#10b981' : '#ff5e3a'}`;
+					item.style.background = isCorrect ? 'rgba(16, 185, 129, 0.1)' : 'rgba(255, 94, 58, 0.1)';
+					item.style.color = 'var(--text)';
+
+					const status = document.createElement('div');
+					status.style.fontSize = '12px';
+					status.style.fontWeight = '700';
+					status.style.marginBottom = '6px';
+					status.style.color = isCorrect ? '#10b981' : '#ff5e3a';
+					status.textContent = isCorrect ? (lang === 'ar' ? '✓ صحيح' : '✓ Correct') : (lang === 'ar' ? '✗ خطأ' : '✗ Incorrect');
+
+					const question_text = document.createElement('div');
+					question_text.style.fontSize = '15px';
+					question_text.style.fontWeight = '500';
+					question_text.textContent = `${idx + 1}. ${qText}`;
+
+					item.appendChild(status);
+					item.appendChild(question_text);
+					summaryList.appendChild(item);
+				});
+
+				pageAnswerSummary.appendChild(summaryList);
+				quizSummarySection.style.display = 'block';
+				// Scroll to summary
+				setTimeout(() => {
+					quizSummarySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+				}, 1000);
+			}
+
 			gameQuestionWrap.style.display = 'none';
 			gameResultWrap.style.display = 'block';
 			gameRestart.style.display = 'inline-block';
