@@ -39,7 +39,7 @@ CodeLearn is a full-stack, interactive programming education platform with a lan
 - **localStorage keys**: `authUser` (JSON user), `siteLang` (en/ar), `site-dimmer-opacity` (0–0.95), `siteFeedback` (JSON array), `wheelHasSpun`, `wheelLastSpinTime`, `wheelDiscount`
 - **No backend DB**: All demo data is ephemeral; production must migrate to persistent storage
 
-## Developer Workflows
+## Developer Workflows 
 
 ### Local Development
 ```bash
