@@ -1,8 +1,4 @@
-User-agent: *
+
 Allow: /
+Sitemap: https://ahkyaradame-coder.github.io/sitemap.xml
 
-# Sitemap location (replace example.com with your real domain)
-Sitemap: https://example.com/sitemap.xml
-
-# NOTE: Replace the `https://example.com` above with your production domain
-# (e.g. https://yourdomain.com/sitemap.xml). Many crawlers expect an absolute URL.
