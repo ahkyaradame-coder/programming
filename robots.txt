@@ -1,4 +1,4 @@
 
 Allow: /
-Sitemap: https://ahkyaradame-coder.github.io/sitemap.xml
+Sitemap:https://ahkyaradame-coder.github.io/programming/sitemap.xml
 

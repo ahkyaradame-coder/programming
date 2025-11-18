@@ -2,16 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://ahkyaradame-coder.github.io/</loc>  <priority>1.0</priority>
+    <loc>https://ahkyaradame-coder.github.io/programming/</loc>  <priority>1.0</priority>
   </url>
   
   <url>
-    <loc>https://ahkyaradame-coder.github.io/index.html</loc> 
+    <loc>https://ahkyaradame-coder.github.io/programming/index.html</loc> 
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>https://ahkyaradame-coder.github.io/login.html</loc> 
+    <loc>https://ahkyaradame-coder.github.io/programming/login.html</loc> 
     <priority>0.6</priority>
   </url>
   
