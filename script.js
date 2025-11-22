@@ -63,6 +63,7 @@
 			openFeedback: 'قدّم ملاحظات', feedbackSubmit: 'إرسال',
 			contactSend: 'إرسال الرسالة',
 			searchPlaceholder: 'ابحث عن الدورات (مثل JavaScript, Python)',
+		
 			levelAllText: 'كل المستويات',
 			// Game strings (Arabic)
 			gameIntroText: 'جاهز؟ هذا الاختبار القصير يحتوي على 7 أسئلة متعددة الخيارات.',
