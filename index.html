@@ -24,9 +24,8 @@
 	<link rel="shortcut icon" href="favicon.svg" />
 	<link rel="apple-touch-icon" href="favicon.svg" />
 	<link rel="stylesheet" href="style.css" />
-	<link rel="icon" type="image/png" href="/favicon.png?v=2">
 	<link rel="icon" type="image/png" href="/favicon.png">
-
+	<link rel="icon" type="image/png" href="/favicon.png">
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width,initial-scale=1" />
 	<title>Learn Programming — Practical, Guided Courses</title>
@@ -254,6 +253,83 @@ console.log(greet('Student'));
 		</div>
 	</section>
 
+	<!-- Certificate Section -->
+	<section id="certificateSection" class="section" style="display:none">
+		<div class="wrap">
+			<h2>Your Certificate</h2>
+			<div id="certificateContainer" style="display:flex;justify-content:center;align-items:center;margin:20px 0">
+				<div id="certificate" style="
+					width:600px;
+					max-width:100%;
+					padding:40px;
+					border:3px solid #d4af37;
+					border-radius:8px;
+					background:linear-gradient(135deg,#f5f5f0 0%,#e8e8e0 100%);
+					text-align:center;
+					box-shadow:0 10px 40px rgba(0,0,0,0.2);
+					position:relative;
+					font-family:'Georgia',serif;
+					overflow:hidden;
+				">
+					<!-- Fog overlay that clears with correct answers -->
+					<div id="certificateFog" style="
+						position:absolute;
+						top:0;
+						left:0;
+						right:0;
+						bottom:0;
+						background:radial-gradient(circle at center, rgba(200,200,200,0.3) 0%, rgba(180,180,180,0.5) 50%, rgba(150,150,150,0.7) 100%);
+						backdrop-filter:blur(8px);
+						pointer-events:none;
+						opacity:1;
+						transition:opacity 0.6s ease-out;
+						border-radius:8px;
+						display:flex;
+						align-items:center;
+						justify-content:center;
+						font-size:18px;
+						color:rgba(100,100,100,0.6);
+						font-weight:500;
+						z-index:10;
+					" data-opacity="1">Answer questions correctly to reveal your certificate...</div>
+					<div style="font-size:28px;color:#d4af37;margin-bottom:20px;font-weight:bold;letter-spacing:2px">
+						CERTIFICATE OF ACHIEVEMENT
+					</div>
+					<div
+						style="border-top:2px solid #d4af37;border-bottom:2px solid #d4af37;padding:20px 0;margin:20px 0">
+						<p style="font-size:14px;color:#666;margin:5px 0">This is to certify that</p>
+						<p id="certUsername" style="font-size:32px;color:#2c3e50;font-weight:bold;margin:15px 0">
+							[User Name]
+						</p>
+						<p style="font-size:14px;color:#666;margin:5px 0">Has successfully completed the CodeLearn
+							programming course</p>
+					</div>
+					<p style="font-size:12px;color:#999;margin-top:20px;font-style:italic">
+						Awarded on <span id="certDate"></span>
+					</p>
+					<div style="display:flex;justify-content:space-around;margin-top:30px;font-size:12px;color:#666">
+						<div>
+							<p style="margin:0;font-weight:bold">CodeLearn</p>
+							<p style="margin:5px 0">Director</p>
+						</div>
+						<div>
+							<img id="certSignature" src="images (4).jpg" alt="Signature"
+								style="max-width:160px;height:auto;display:block;margin:0;border-radius: 10px;" />
+							<p style="margin:5px 0;font-size:17px">Signature</p>
+						</div>
+					</div>
+					<div style="margin-top:20px;text-align:center">
+						<button id="downloadCertificateBtn" class="btn btn-primary" disabled
+							title="Complete the quiz to unlock">Download Certificate</button>
+						<div id="certDownloadNote" style="font-size:12px;color:var(--muted);margin-top:8px">Complete the
+							full quiz (Play Now) to unlock certificate download.</div>
+					</div>
+					<div style="position:absolute;top:10px;right:10px;font-size:40px;opacity:0.1;color:#d4af37">🎓</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
 	<footer class="footer">
 		<div class="wrap">
 			<small>&copy; <span id="year"></span> CodeLearn — Learn by building. All rights reserved.</small>
@@ -333,7 +409,7 @@ console.log(greet('Student'));
 	<div id="whatsappModal" class="wheel-modal" aria-hidden="true">
 		<div class="wheel-overlay"></div>
 		<div class="wheel-content">
-			chang Avatar×</button>
+			<button id="whatsappClose" class="wheel-close" aria-label="Close">×</button>
 			<h2>Chat with an Expert</h2>
 			<p style="color:var(--muted)">Connect directly via WhatsApp to get help from our experts.</p>
 			<label for="waNumber">Phone number</label>

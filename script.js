@@ -63,7 +63,7 @@
 			openFeedback: 'قدّم ملاحظات', feedbackSubmit: 'إرسال',
 			contactSend: 'إرسال الرسالة',
 			searchPlaceholder: 'ابحث عن الدورات (مثل JavaScript, Python)',
-		
+
 			levelAllText: 'كل المستويات',
 			// Game strings (Arabic)
 			gameIntroText: 'جاهز؟ هذا الاختبار القصير يحتوي على 7 أسئلة متعددة الخيارات.',
@@ -511,6 +511,21 @@
 			}
 		};
 
+		function updateCertificateDisplay() {
+			const certSection = document.getElementById('certificateSection');
+			if (!certSection) return;
+			const user = window.Auth.getCurrentUser();
+			if (user) {
+				const certUsername = document.getElementById('certUsername');
+				const certDate = document.getElementById('certDate');
+				if (certUsername) certUsername.textContent = escapeHtml(user.name || 'Member');
+				if (certDate) certDate.textContent = new Date().toLocaleDateString();
+				certSection.style.display = 'block';
+			} else {
+				certSection.style.display = 'none';
+			}
+		}
+
 		function updateUserArea() {
 			const ua = document.getElementById('userArea');
 			if (!ua) return;
@@ -518,7 +533,7 @@
 			if (user) {
 				const sub = user.subscription && user.subscription.expires ? ('<span class="sub-badge">' + (user.subscription.plan || 'Member') + ' • ' + (new Date(user.subscription.expires).toLocaleDateString()) + '</span>') : '';
 				// Avatar: use stored data url if available, otherwise fallback to initial
-				const avatarHtml = user.avatar ? (`<img src="${user.avatar}" alt="${escapeHtml(user.name || 'Avatar')}" class="avatar-img" />`) : (`<span class="avatar-fallback" style="background:linear-gradient(90deg,#5a3bff,#00c2a8);width:36px;height:36px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;color:white;font-weight:700">${(user.name || 'U').charAt(0).toUpperCase()}</span>`);
+				const avatarHtml = user.avatar ? (`<img id="avatarImage" src="${user.avatar}" alt="${escapeHtml(user.name || 'Avatar')}" class="avatar-img" style="cursor:pointer" />`) : (`<span id="avatarFallback" class="avatar-fallback" style="background:linear-gradient(90deg,#5a3bff,#00c2a8);width:36px;height:36px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;color:white;font-weight:700;cursor:pointer">${(user.name || 'U').charAt(0).toUpperCase()}</span>`);
 				ua.innerHTML = `
 					<span style="display:inline-flex;align-items:center;gap:8px">
 					  ${avatarHtml}
@@ -526,16 +541,23 @@
 					</span>
 					${sub}
 					<input id="avatarInput" type="file" accept="image/*" style="display:none" />
-					<button id="changeAvatarBtn" class="btn btn-ghost" style="margin-left:10px">Change Avatar</button>
 					${user.avatar ? '<button id="removeAvatarBtn" class="btn btn-ghost" style="margin-left:6px">Remove Avatar</button>' : ''}
 					<button id="logoutBtn" class="btn btn-ghost" style="margin-left:6px">Logout</button>
 				`;
 				const avatarInput = document.getElementById('avatarInput');
-				const changeAvatarBtn = document.getElementById('changeAvatarBtn');
+				const avatarImage = document.getElementById('avatarImage');
+				const avatarFallback = document.getElementById('avatarFallback');
 				const removeAvatarBtn = document.getElementById('removeAvatarBtn');
 				const logoutBtn = document.getElementById('logoutBtn');
 
-				changeAvatarBtn && changeAvatarBtn.addEventListener('click', () => { avatarInput && avatarInput.click(); });
+				// Click avatar image or fallback to change avatar
+				if (avatarImage) {
+					avatarImage.addEventListener('click', () => { avatarInput && avatarInput.click(); });
+				}
+				if (avatarFallback) {
+					avatarFallback.addEventListener('click', () => { avatarInput && avatarInput.click(); });
+				}
+
 				avatarInput && avatarInput.addEventListener('change', (ev) => {
 					const f = ev.target.files && ev.target.files[0];
 					if (!f) return;
@@ -557,8 +579,13 @@
 				});
 
 				logoutBtn && logoutBtn.addEventListener('click', () => { window.Auth.signOut(); });
+
+				// Update certificate display when user logs in
+				updateCertificateDisplay();
 			} else {
 				ua.innerHTML = `<a id="loginLink" class="btn btn-ghost" href="login.html">Login</a>`;
+				// Hide certificate when logged out
+				updateCertificateDisplay();
 			}
 		}
 
@@ -969,6 +996,8 @@
 
 		function startGame() {
 			state.idx = 0; state.answers = [];
+			// reset fog when starting a new attempt
+			try { updateCertificateFog(); } catch (e) { /* ignore */ }
 			gameIntro.style.display = 'none';
 			gameQuestionWrap.style.display = 'block';
 			gameResultWrap.style.display = 'none';
@@ -1001,6 +1030,21 @@
 			gameNext.style.display = 'inline-block';
 		}
 
+		function updateCertificateFog() {
+			const fog = document.getElementById('certificateFog');
+			if (!fog) return;
+			const correct = (state.answers || []).filter(s => Number(s) > 0).length;
+			const total = (questions && questions.length) ? questions.length : 7;
+			const newOpacity = Math.max(0, 1 - (correct / total));
+			fog.style.opacity = String(newOpacity);
+			fog.dataset.opacity = String(newOpacity);
+			if (newOpacity <= 0.03) {
+				fog.style.display = 'none';
+			} else {
+				fog.style.display = 'flex';
+			}
+		}
+
 		function isAnswerCorrect(btn) {
 			const score = Number(btn.dataset.score || 0);
 			return score > 0;
@@ -1018,6 +1062,8 @@
 			}
 
 			state.answers.push(Number(sel.dataset.score || 0));
+			// update fog opacity based on correct answers so far
+			try { updateCertificateFog(); } catch (e) { /* ignore */ }
 			state.idx += 1;
 			if (state.idx >= questions.length) {
 				finishGame();
@@ -1043,6 +1089,14 @@
 				return c.level === 'advanced';
 			}).slice(0, 3).map(c => c.title).join(', ');
 			gameRec.textContent = rec ? `${(map.gameRecommendedCourses || 'Recommended courses: ')}${rec}` : (lang === 'ar' ? 'استعرض دوراتنا للعثور على المناسب.' : 'Explore our courses to find a good fit.');
+
+			// Enable certificate download after quiz completion
+			const downloadBtn = document.getElementById('downloadCertificateBtn');
+			if (downloadBtn) {
+				downloadBtn.disabled = false;
+				downloadBtn.title = 'Download your certificate';
+				localStorage.setItem('quizCompleted', 'true');
+			}
 
 			// Build answer summary at the bottom of the page
 			const pageAnswerSummary = document.getElementById('pageAnswerSummary');
@@ -1164,6 +1218,53 @@
 
 		// close modal on overlay click
 		gameModal.addEventListener('click', (ev) => { if (ev.target === gameModal) closeGame(); });
+
+		// Certificate download handler
+		const downloadBtn = document.getElementById('downloadCertificateBtn');
+		if (downloadBtn) {
+			// Check if quiz was already completed (persist across page loads)
+			if (localStorage.getItem('quizCompleted') === 'true') {
+				downloadBtn.disabled = false;
+				downloadBtn.title = 'Download your certificate';
+			}
+			downloadBtn.addEventListener('click', downloadCertificate);
+		}
+
+		function downloadCertificate() {
+			const cert = document.getElementById('certificate');
+			if (!cert) return alert('Certificate not found.');
+			const user = window.Auth.getCurrentUser();
+			if (!user) return alert('Please log in first.');
+
+			// Use html2canvas and jsPDF if available, otherwise fall back to print
+			if (typeof html2canvas === 'undefined' || typeof jsPDF === 'undefined') {
+				// Fallback: use browser print dialog (user can save as PDF)
+				const certSection = document.getElementById('certificateSection');
+				if (certSection) {
+					// Temporarily show and focus
+					const wasVisible = certSection.style.display !== 'none';
+					certSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+					setTimeout(() => {
+						alert('The certificate will open in print preview. Select "Save as PDF" to download.');
+						window.print();
+					}, 500);
+				}
+			} else {
+				// Use html2canvas + jsPDF for direct PDF download
+				html2canvas(cert, { scale: 2, useCORS: true }).then(canvas => {
+					const imgData = canvas.toDataURL('image/png');
+					const pdf = new jsPDF('landscape', 'mm', 'a4');
+					const width = pdf.internal.pageSize.getWidth();
+					const height = pdf.internal.pageSize.getHeight();
+					pdf.addImage(imgData, 'PNG', 0, 0, width, height);
+					pdf.save(`CodeLearn-Certificate-${user.name || 'User'}-${new Date().getTime()}.pdf`);
+				}).catch(err => {
+					console.error('Error generating PDF:', err);
+					alert('Error generating PDF. Using print dialog instead.');
+					window.print();
+				});
+			}
+		}
 
 	})();
 
