@@ -138,6 +138,32 @@
 		setLanguage(saved);
 	}
 
+	function setTheme(theme) {
+		if (theme === 'dark') {
+			document.documentElement.setAttribute('data-theme', 'dark');
+			byId('themeToggle').textContent = '☀️';
+			byId('themeToggle').title = 'Switch to light mode (currently dark)';
+		} else {
+			document.documentElement.removeAttribute('data-theme');
+			byId('themeToggle').textContent = '🌙';
+			byId('themeToggle').title = 'Switch to dark mode (currently light)';
+		}
+		localStorage.setItem('siteTheme', theme);
+	}
+
+	function initTheme() {
+		const themeToggle = byId('themeToggle');
+		const saved = localStorage.getItem('siteTheme') || 'light';
+		setTheme(saved);
+		if (themeToggle) {
+			themeToggle.addEventListener('click', () => {
+				const current = localStorage.getItem('siteTheme') || 'light';
+				const newTheme = current === 'dark' ? 'light' : 'dark';
+				setTheme(newTheme);
+			});
+		}
+	}
+
 	function createCard(c) {
 		const div = document.createElement('article');
 		div.className = 'card';
@@ -377,6 +403,9 @@
 
 		// Initialize language (EN / AR)
 		initLanguage();
+
+		// Initialize theme (light / dark)
+		initTheme();
 
 	});
 
