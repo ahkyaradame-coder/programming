@@ -50,7 +50,7 @@ body {
 
 body {
 	margin: 0;
-	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+	font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
 	background: var(--bg);
 	color: var(--text-primary);
 	-webkit-font-smoothing: antialiased;
@@ -89,7 +89,8 @@ body {
 	font-weight: 700;
 	text-decoration: none;
 	font-size: 20px;
-	letter-spacing: -0.5px
+	letter-spacing: -0.5px;
+	font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
 }
 
 .nav {
@@ -164,7 +165,7 @@ body {
 
 .hero {
 	padding: 80px 0;
-		background: linear-gradient(135deg, #72ade8 0%, #f3f4f6 100%);
+	background: linear-gradient(135deg, #72ade8 0%, #f3f4f6 100%);
 }
 
 .hero-inner {
@@ -1330,4 +1331,79 @@ body {
 #playNowBtn:hover {
 	transform: translateY(-2px);
 	box-shadow: 0 12px 30px rgba(239, 68, 68, 0.3)
+}
+
+/* --- Visual polish additions --- */
+
+/* soft decorative background blobs */
+body::before {
+	content: '';
+	position: fixed;
+	inset: 0;
+	z-index: -1;
+	pointer-events: none;
+	background-image: radial-gradient(circle at 10% 20%, rgba(99,102,241,0.06) 0%, transparent 18%),
+					  radial-gradient(circle at 90% 80%, rgba(236,72,153,0.04) 0%, transparent 16%);
+	opacity: 1;
+	transition: opacity 400ms ease;
+}
+
+/* gentle hero entrance */
+.hero-inner {
+	animation: cl-fade-up 700ms cubic-bezier(.2,.9,.3,1) both;
+}
+
+@keyframes cl-fade-up {
+	from { opacity: 0; transform: translateY(10px); }
+	to   { opacity: 1; transform: translateY(0); }
+}
+
+/* subtle text glow for hero headline */
+.hero-copy h1 {
+	text-shadow: 0 6px 20px rgba(99,102,241,0.06);
+}
+
+/* glassy cards + improved hover */
+.card {
+	background: linear-gradient(180deg, rgba(255,255,255,0.8), var(--card));
+	backdrop-filter: blur(6px);
+	border: 1px solid rgba(255,255,255,0.06);
+}
+
+.card:hover {
+	transform: translateY(-6px) scale(1.01);
+	box-shadow: 0 18px 40px rgba(2,6,23,0.12);
+}
+
+/* improved primary button with soft glow */
+.btn-primary {
+	position: relative;
+	overflow: visible;
+}
+
+.btn-primary:after {
+	content: '';
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: 260%;
+	height: 260%;
+	background: radial-gradient(closest-side, rgba(99,102,241,0.08), transparent 40%);
+	opacity: 0;
+	transition: opacity 220ms ease, transform 220ms ease;
+	pointer-events: none;
+	border-radius: 50%;
+}
+
+.btn-primary:hover:after { opacity: 1; transform: translate(-50%, -50%) scale(1.02); }
+
+/* smaller subtle animations for interactive affordances */
+.nav a { transition: transform 160ms ease, background-color 160ms ease; }
+.nav a:hover { transform: translateY(-2px); }
+
+/* reduce motion respects user prefs */
+@media (prefers-reduced-motion:reduce) {
+	.hero-inner { animation: none }
+	.card, .btn-primary { transition: none }
 }

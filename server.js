@@ -5,6 +5,9 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Simple in-memory notifications store (demo only)
+const notifications = [];
+
 const PAYPAL_CLIENT_ID = process.env.PAYPAL_CLIENT_ID || '';
 const PAYPAL_SECRET = process.env.PAYPAL_SECRET || '';
 const PAYPAL_ENV = process.env.PAYPAL_ENV === 'live' ? 'https://api-m.paypal.com' : 'https://api-m.sandbox.paypal.com';
@@ -72,6 +75,26 @@ app.post('/webhook', express.raw({ type: '*/*' }), (req, res) => {
     console.log('Webhook received');
     // TODO: verify webhook signature using PayPal SDK and WEBHOOK_ID before processing
     res.status(200).send('OK');
+});
+
+// Notification endpoint: receives client-side reports (e.g., failed bot check)
+app.post('/api/notify', (req, res) => {
+    try {
+        const payload = req.body || {};
+        const note = {
+            receivedAt: new Date().toISOString(),
+            ip: req.ip,
+            userAgent: req.get('User-Agent') || '',
+            payload
+        };
+        notifications.push(note);
+        console.log('Notification received:', note);
+        // In production, persist to a DB or forward to alerting/analytics
+        res.status(200).json({ status: 'ok' });
+    } catch (err) {
+        console.error('Failed to handle notification', err);
+        res.status(500).json({ error: 'failed' });
+    }
 });
 
 app.listen(PORT, () => {

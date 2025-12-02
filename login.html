@@ -32,6 +32,11 @@
             <label for="eEmail" style="display:block;margin-bottom:6px">Email address</label>
             <input id="eEmail" type="email" placeholder="you@example.com" required
                 style="width:100%;padding:10px;border-radius:8px;margin-bottom:12px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit" />
+            <!-- Password removed per request -->
+            <div style="margin:10px 0;display:flex;align-items:center;gap:10px">
+                <input id="notRobot" type="checkbox" />
+                <label for="notRobot" style="user-select:none;cursor:pointer">I'm not a robot</label>
+            </div>
             <div style="display:flex;gap:10px">
                 <button id="emailSubmit" class="btn btn-primary">Continue (free)</button>
                 <a href="index.html" class="btn btn-ghost">Back</a>
@@ -49,6 +54,7 @@
             const googleBtn = document.getElementById('googleBtn');
             const emailForm = document.getElementById('emailForm');
             const emailSubmit = document.getElementById('emailSubmit');
+            const notRobot = document.getElementById('notRobot');
 
             // Simulated Google sign-in (demo). In production, wire real OAuth.
             googleBtn.addEventListener('click', () => {
@@ -64,8 +70,38 @@
                 }
             });
 
+            if (notRobot && emailSubmit) {
+                emailSubmit.disabled = !notRobot.checked;
+                notRobot.addEventListener('change', () => {
+                    emailSubmit.disabled = !notRobot.checked;
+                });
+            }
+
             emailForm.addEventListener('submit', (ev) => {
                 ev.preventDefault();
+                if (notRobot && !notRobot.checked) {
+                    // Notify server that someone tried to submit without confirming bot check
+                    try {
+                        const name = document.getElementById('eName').value.trim();
+                        const email = document.getElementById('eEmail').value.trim();
+                        const body = {
+                            event: 'failed_bot_check',
+                            name: name || null,
+                            email: email || null
+                        };
+                        // fire-and-forget; don't block UX
+                        fetch('/api/notify', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(body)
+                        }).catch(() => { /* ignore */ });
+                    } catch (err) {
+                        // ignore errors while attempting to notify
+                    }
+                    alert("Please confirm you're not a robot.");
+                    notRobot.focus();
+                    return;
+                }
                 const name = document.getElementById('eName').value.trim();
                 const email = document.getElementById('eEmail').value.trim();
                 if (!email) return;
