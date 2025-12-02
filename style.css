@@ -38,6 +38,26 @@
 	--glass: rgba(255, 255, 255, 0.03);
 }
 
+[data-theme="dark"] body::before {
+	background-image: linear-gradient(-105deg, rgb(100 0 255 / 84%), #000000);
+	opacity: 0.95;
+}
+
+/* Apply requested card gradient in dark mode */
+[data-theme="dark"] .card {
+	background: linear-gradient(268deg, rgb(141 86 255 / 80%), #140d1a);
+	border: 1px solid rgba(255, 255, 255, 0.04);
+	box-shadow: 0 12px 30px rgba(20, 10, 20, 0.5);
+	color: var(--text-primary);
+	/* keep rounded corners and subtle blur for contrast */
+	backdrop-filter: blur(4px);
+}
+
+[data-theme="dark"] .card h3,
+[data-theme="dark"] .card p {
+	color: var(--text-primary);
+}
+
 * {
 	box-sizing: border-box
 }
@@ -1342,37 +1362,44 @@ body::before {
 	inset: 0;
 	z-index: -1;
 	pointer-events: none;
-	background-image: radial-gradient(circle at 10% 20%, rgba(99,102,241,0.06) 0%, transparent 18%),
-					  radial-gradient(circle at 90% 80%, rgba(236,72,153,0.04) 0%, transparent 16%);
+	background-image: radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.06) 0%, transparent 18%),
+		radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.04) 0%, transparent 16%);
 	opacity: 1;
 	transition: opacity 400ms ease;
 }
 
 /* gentle hero entrance */
 .hero-inner {
-	animation: cl-fade-up 700ms cubic-bezier(.2,.9,.3,1) both;
+	animation: cl-fade-up 700ms cubic-bezier(.2, .9, .3, 1) both;
 }
 
 @keyframes cl-fade-up {
-	from { opacity: 0; transform: translateY(10px); }
-	to   { opacity: 1; transform: translateY(0); }
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 
 /* subtle text glow for hero headline */
 .hero-copy h1 {
-	text-shadow: 0 6px 20px rgba(99,102,241,0.06);
+	text-shadow: 0 6px 20px rgba(99, 102, 241, 0.06);
 }
 
 /* glassy cards + improved hover */
 .card {
-	background: linear-gradient(180deg, rgba(255,255,255,0.8), var(--card));
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.8), var(--card));
 	backdrop-filter: blur(6px);
-	border: 1px solid rgba(255,255,255,0.06);
+	border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .card:hover {
 	transform: translateY(-6px) scale(1.01);
-	box-shadow: 0 18px 40px rgba(2,6,23,0.12);
+	box-shadow: 0 18px 40px rgba(2, 6, 23, 0.12);
 }
 
 /* improved primary button with soft glow */
@@ -1389,21 +1416,95 @@ body::before {
 	transform: translate(-50%, -50%);
 	width: 260%;
 	height: 260%;
-	background: radial-gradient(closest-side, rgba(99,102,241,0.08), transparent 40%);
+	background: radial-gradient(closest-side, rgba(99, 102, 241, 0.08), transparent 40%);
 	opacity: 0;
 	transition: opacity 220ms ease, transform 220ms ease;
 	pointer-events: none;
 	border-radius: 50%;
 }
 
-.btn-primary:hover:after { opacity: 1; transform: translate(-50%, -50%) scale(1.02); }
+.btn-primary:hover:after {
+	opacity: 1;
+	transform: translate(-50%, -50%) scale(1.02);
+}
 
 /* smaller subtle animations for interactive affordances */
-.nav a { transition: transform 160ms ease, background-color 160ms ease; }
-.nav a:hover { transform: translateY(-2px); }
+.nav a {
+	transition: transform 160ms ease, background-color 160ms ease;
+}
+
+.nav a:hover {
+	transform: translateY(-2px);
+}
 
 /* reduce motion respects user prefs */
 @media (prefers-reduced-motion:reduce) {
-	.hero-inner { animation: none }
-	.card, .btn-primary { transition: none }
+	.hero-inner {
+		animation: none
+	}
+
+	.card,
+	.btn-primary {
+		transition: none
+	}
+}
+
+/* Mobile / touch-specific "hover" behavior styles */
+@media (hover: none) and (pointer: coarse),
+(max-width: 600px) {
+	.card {
+		touch-action: manipulation;
+	}
+
+	.card.touch-hover {
+		transform: translateY(-6px) scale(1.01);
+		box-shadow: 0 18px 40px rgba(2, 6, 23, 0.18);
+		border-color: rgba(255, 255, 255, 0.04);
+	}
+
+	/* ensure buttons remain tappable inside cards */
+	.card.touch-hover .btn {
+		transform: none
+	}
+}
+
+/* --- Page-away styles: apply when user leaves the tab/window --- */
+/* Adds a subtle blur/gray effect and suppresses hover transforms while away */
+body.away {
+	transition: filter 300ms ease, opacity 300ms ease;
+}
+
+body.away .card,
+body.away .hero,
+body.away .feature,
+body.away .pricing-card,
+body.away .feature-grid,
+body.away .grid,
+body.away .ai-tutor {
+	filter: blur(3px) grayscale(0.25) saturate(0.9);
+	opacity: 0.75;
+	transition: filter 300ms ease, opacity 300ms ease;
+}
+
+/* Disable hover/transform motion while away to avoid flicker */
+body.away .card:hover,
+body.away .btn:hover,
+body.away .nav a:hover {
+	transform: none !important;
+}
+
+/* Away banner (visible while away) */
+#awayBanner {
+	position: fixed;
+	right: 16px;
+	top: 16px;
+	z-index: 12050;
+	background: rgba(15, 23, 36, 0.85);
+	color: white;
+	padding: 8px 12px;
+	border-radius: 10px;
+	font-weight: 700;
+	font-size: 13px;
+	backdrop-filter: blur(6px);
+	box-shadow: 0 8px 20px rgba(2, 6, 23, 0.6);
 }

@@ -262,6 +262,24 @@
 			const course = courses.find(c => String(c.id) === String(id));
 			if (course) alert(`${course.title}\n\n${course.desc}`);
 		});
+
+		// Mobile touch "hover" emulation: first tap highlights card (adds .touch-hover),
+		// second tap proceeds to interaction (e.g., pressing the button).
+		if (courseGrid) {
+			courseGrid.addEventListener('touchstart', (ev) => {
+				const card = ev.target && ev.target.closest ? ev.target.closest('.card') : null;
+				if (!card) return;
+				// If already showing touch-hover, allow normal interaction
+				if (card.classList.contains('touch-hover')) return;
+				// remove touch-hover from other cards
+				document.querySelectorAll('.card.touch-hover').forEach(c => { if (c !== card) c.classList.remove('touch-hover'); });
+				card.classList.add('touch-hover');
+				// prevent the first tap from immediately activating inner controls
+				ev.preventDefault();
+				// auto-remove after a short delay
+				setTimeout(() => { card.classList.remove('touch-hover'); }, 3500);
+			}, { passive: false });
+		}
 		// Generate JSON-LD structured data dynamically from the courses array
 		try {
 			injectStructuredData(courses);
@@ -1609,4 +1627,46 @@
 		drawWheel();
 	})();
 
+})();
+
+/* Visibility / Away handlers: add `body.away` when user leaves the tab/window */
+(function visibilityAway() {
+	let awayBanner = null;
+
+	function createBanner() {
+		if (document.getElementById('awayBanner')) return document.getElementById('awayBanner');
+		const d = document.createElement('div');
+		d.id = 'awayBanner';
+		d.textContent = 'You are away — interactions paused';
+		document.body.appendChild(d);
+		return d;
+	}
+
+	function removeBanner() {
+		const el = document.getElementById('awayBanner');
+		if (el) el.remove();
+		awayBanner = null;
+	}
+
+	function setAway(on) {
+		try {
+			document.body.classList.toggle('away', !!on);
+			if (on) {
+				awayBanner = createBanner();
+			} else {
+				removeBanner();
+			}
+		} catch (err) { /* ignore */ }
+	}
+
+	// Use Page Visibility API and focus/blur as fallbacks
+	document.addEventListener('visibilitychange', function () {
+		setAway(document.hidden);
+	});
+
+	window.addEventListener('blur', function () { setAway(true); });
+	window.addEventListener('focus', function () { setAway(false); });
+
+	// If page loads hidden, immediately mark away
+	try { setAway(document.hidden); } catch (e) { /* ignore */ }
 })();

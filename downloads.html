@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Developer Downloads — CodeLearn</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        @media (max-width:900px) {
+            .tool-grid {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .tool-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px
+        }
+
+        .tool-link {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .tool-meta {
+            color: var(--text-secondary);
+            font-size: 13px
+        }
+    </style>
+</head>
+
+<body>
+    <header class="topbar">
+        <div class="wrap topbar-inner">
+            <a class="brand" href="index.html">CodeLearn</a>
+            <nav class="nav" id="navMenu">
+                <a href="index.html">Home</a>
+                <a href="downloads.html" aria-current="page">Downloads</a>
+                <a href="login.html">Login</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="wrap">
+        <section class="section">
+            <div class="section-head">
+                <h2>Developer Downloads</h2>
+                <p class="muted">Essential tools, runtimes, and SDKs to build websites and apps. Official links for
+                    Windows, macOS, and Linux are provided where available.</p>
+            </div>
+
+            <div style="margin-top:18px" class="tool-grid">
+                <div class="card">
+                    <h3>Editors & IDEs</h3>
+                    <ul class="tool-list">
+                        <li>
+                            <div class="tool-link">
+                                <div>
+                                    <strong>Visual Studio Code</strong>
+                                    <div class="tool-meta">Lightweight code editor with extensions for web & app
+                                        development.</div>
+                                </div>
+                                <div>
+                                    <a class="btn btn-ghost" href="https://code.visualstudio.com/" target="_blank"
+                                        rel="noopener">Download</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="tool-link">
+                                <div>
+                                    <strong>JetBrains IntelliJ / WebStorm</strong>
+                                    <div class="tool-meta">Full-featured IDEs (JavaScript, TypeScript, Java, Kotlin, and
+                                        more).</div>
+                                </div>
+                                <div>
+                                    <a class="btn btn-ghost" href="https://www.jetbrains.com/" target="_blank"
+                                        rel="noopener">Official site</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Version Control</h3>
+                    <ul class="tool-list">
+                        <li>
+                            <div class="tool-link">
+                                <div>
+                                    <strong>Git</strong>
+                                    <div class="tool-meta">Distributed version control — essential for collaborating on
+                                        code.</div>
+                                </div>
+                                <div>
+                                    <a class="btn btn-ghost" href="https://git-scm.com/downloads" target="_blank"
+                                        rel="noopener">Downloads</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="tool-link">
+                                <div>
+                                    <strong>GitHub Desktop</strong>
+                                    <div class="tool-meta">GUI client for Git and GitHub workflows (optional).</div>
+                                </div>
+                                <div>
+                                    <a class="btn btn-ghost" href="https://desktop.github.com/" target="_blank"
+                                        rel="noopener">Download</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Languages & Runtimes</h3>
+                    <ul class="tool-list">
+                        <li>
+                            <div class="tool-link">
+                                <div>
+                                    <strong>Node.js</strong>
+                                    <div class="tool-meta">JavaScript runtime for building servers and tooling. LTS
+                                        recommended.</div>
+                                </div>
+                                <div>
+                                    <a class="btn btn-ghost" href="https://nodejs.org/en/download/" target="_blank"
+                                        rel="noopener">Downloads</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="tool-link">
+                                <div>
+                                    <strong>Python</strong>
+                                    <div class="tool-meta">General-purpose language often used for backends, scripts,
+                                        ML.</div>
+                                </div>
+                                <div>
+                                    <a class="btn btn-ghost" href="https://www.python.org/downloads/" target="_blank"
+                                        rel="noopener">Downloads</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="tool-link">
+                                <div>
+                                    <strong>Java (OpenJDK)</strong>
+                                    <div class="tool-meta">Needed for Android development and many server-side
+                                        frameworks.</div>
+                                </div>
+                                <div>
+                                    <a class="btn btn-ghost" href="https://adoptium.net/" target="_blank"
+                                        rel="noopener">Adoptium</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Browsers & Testing</h3>
+                    <ul class="tool-list">
+                        <li>
+                            <div class="tool-link">
+                                <div>
+                                    <strong>Google Chrome</strong>
+                                    <div class="tool-meta">Developer tools and Chromium-based testing.</div>
+                                </div>
+                                <div>
+                                    <a class="btn btn-ghost" href="https://www.google.com/chrome/" target="_blank"
+                                        rel="noopener">Download</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="tool-link">
+                                <div>
+                                    <strong>Mozilla Firefox</strong>
+                                    <div class="tool-meta">Excellent developer tools and standards testing.</div>
+                                </div>
+                                <div>
+                                    <a class="btn btn-ghost" href="https://www.mozilla.org/firefox/new/" target="_blank"
+                                        rel="noopener">Download</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="tool-link">
+                                <div>
+                                    <strong>Microsoft Edge</strong>
+                                    <div class="tool-meta">Chromium-based browser useful for compatibility testing.
+                                    </div>
+                                </div>
+                                <div>
+                                    <a class="btn btn-ghost" href="https://www.microsoft.com/edge" target="_blank"
+                                        rel="noopener">Download</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Containers & DevOps</h3>
+                    <ul class="tool-list">
+                        <li>
+                            <div class="tool-link">
+                                <div>
+                                    <strong>Docker</strong>
+                                    <div class="tool-meta">Container platform for consistent development & deployment.
+                                    </div>
+                                </div>
+                                <div>
+                                    <a class="btn btn-ghost" href="https://www.docker.com/get-started" target="_blank"
+                                        rel="noopener">Get Docker</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="tool-link">
+                                <div>
+                                    <strong>kubectl</strong>
+                                    <div class="tool-meta">Kubernetes command-line tool for cluster management.</div>
+                                </div>
+                                <div>
+                                    <a class="btn btn-ghost" href="https://kubernetes.io/docs/tasks/tools/"
+                                        target="_blank" rel="noopener">Install</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Databases</h3>
+                    <ul class="tool-list">
+                        <li>
+                            <div class="tool-link">
+                                <div>
+                                    <strong>PostgreSQL</strong>
+                                    <div class="tool-meta">Reliable relational database for production development.
+                                    </div>
+                                </div>
+                                <div>
+                                    <a class="btn btn-ghost" href="https://www.postgresql.org/download/" target="_blank"
+                                        rel="noopener">Downloads</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="tool-link">
+                                <div>
+                                    <strong>SQLite</strong>
+                                    <div class="tool-meta">Lightweight embedded database, great for small projects and
+                                        testing.</div>
+                                </div>
+                                <div>
+                                    <a class="btn btn-ghost" href="https://www.sqlite.org/download.html" target="_blank"
+                                        rel="noopener">Download</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Mobile SDKs</h3>
+                    <ul class="tool-list">
+                        <li>
+                            <div class="tool-link">
+                                <div>
+                                    <strong>Android Studio</strong>
+                                    <div class="tool-meta">Official IDE for Android app development (includes SDK
+                                        manager).</div>
+                                </div>
+                                <div>
+                                    <a class="btn btn-ghost" href="https://developer.android.com/studio" target="_blank"
+                                        rel="noopener">Download</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="tool-link">
+                                <div>
+                                    <strong>Xcode</strong>
+                                    <div class="tool-meta">macOS-only: Apple's IDE for iOS and macOS development (App
+                                        Store).</div>
+                                </div>
+                                <div>
+                                    <a class="btn btn-ghost" href="https://developer.apple.com/xcode/" target="_blank"
+                                        rel="noopener">Xcode</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Utilities & Helpers</h3>
+                    <ul class="tool-list">
+                        <li>
+                            <div class="tool-link">
+                                <div>
+                                    <strong>Postman</strong>
+                                    <div class="tool-meta">API client for testing and documenting HTTP APIs.</div>
+                                </div>
+                                <div>
+                                    <a class="btn btn-ghost" href="https://www.postman.com/downloads/" target="_blank"
+                                        rel="noopener">Download</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="tool-link">
+                                <div>
+                                    <strong>Wireframe / Design</strong>
+                                    <div class="tool-meta">Figma (web) for UI design and prototyping.</div>
+                                </div>
+                                <div>
+                                    <a class="btn btn-ghost" href="https://www.figma.com/" target="_blank"
+                                        rel="noopener">Figma</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <p class="muted" style="margin-top:18px">Tip: prefer official vendor downloads and verify signatures for
+                production environments. For package managers, use your platform's package manager (winget, choco, brew,
+                apt, yum) when available.</p>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="wrap">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+                <div class="muted">© <span id="year">2025</span> CodeLearn</div>
+                <div><a class="muted" href="index.html">Back to Home</a></div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // small helper to set year
+        try { document.getElementById('year').textContent = new Date().getFullYear(); } catch (e) { }
+    </script>
+</body>
+
+</html>
